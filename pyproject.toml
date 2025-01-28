@@ -1,0 +1,9 @@
+[project]
+name = "deepseek-r1-ec2"
+version = "0.1.0"
+description = "Rin Deepseek-R1 models on Amazon EC2"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "requests>=2.32.3",
+]
