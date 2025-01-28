@@ -2,7 +2,7 @@
 
 Here are the steps to serve the [`deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B) and other models from the `deepseek-r1` family of models on Amazon EC2 using [`vllm`](https://github.com/vllm-project/vllm). vLLM is a fast and easy-to-use library for LLM inference and serving.
 
->The steps provided below are for the 32B distilled version but apply to other variants as well.
+>The steps provided below are for the 32B distilled version but apply to other variants as well. To use `deepseek-ai/DeepSeek-R1-Distill-Qwen-32B` for example run this code on a `g6e.xlarge` Amazon EC2 instance.
 
 1. Create an EC2 instance with the `Deep Learning OSS Nvidia Driver AMI GPU PyTorch` AMI and `g6e.12xlarge` instance type. You can see step by step instructions [here](https://aws-samples.github.io/foundation-model-benchmarking-tool/misc/ec2_instance_creation_steps.html). At the time of this writing the AMI used for `us-east-1` was `ami-067bd563cecc90173`.
 
@@ -37,7 +37,8 @@ Here are the steps to serve the [`deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`](htt
     cd deepseek-r1-ec2
     chmod +x deploy_model.sh
     # the container takes about 10-minutes to start
-    ./deploy_model.sh
+    # takes two command line arguments, model id and tensor parallel degree
+    ./deploy_model.sh deepseek-ai/DeepSeek-R1-Distill-Qwen-32B 4
     ```
 
 1. Wait for 10-minutes, and then verify that the container is running.
@@ -114,4 +115,50 @@ Here are the steps to serve the [`deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`](htt
 
 1. You can use [`FMBench`](https://aws-samples.github.io/foundation-model-benchmarking-tool/benchmarking_on_ec2.html) for benchmarking performance of this model.
 
+## Instance type and TP degree for different variants of Deepseek-R1
+
+The following table lists the instance types for use with different Deepseek-R1 variants. **Support for the non-distilled model i.e. Deepseek-R1 with 671B parameters is expected soon, stay tuned for updates**.
+
+| **Model** | **Recommented EC2 instance type** | **TP Degree** | **Download** |
+| :------------: | :------------: | :------------: | :------------: |
+| DeepSeek-R1-Distill-Qwen-1.5B  | `g6e.xlarge` | 1 | [🤗 HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B)   |
+| DeepSeek-R1-Distill-Qwen-7B  | `g6e.2xlarge` | 1 | [🤗 HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B)   |
+| DeepSeek-R1-Distill-Llama-8B  | `g6e.2xlarge` | 1 |  [🤗 HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-8B)   |
+| DeepSeek-R1-Distill-Qwen-14B   | `g6e.12xlarge` | 4 |  [🤗 HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B)   |
+|DeepSeek-R1-Distill-Qwen-32B  | `g6e.12xlarge` | 4 |  [🤗 HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B)   |
+| DeepSeek-R1-Distill-Llama-70B  | `g6e.48xlarge` | 8 | [🤗 HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Llama-70B)   |
+
+## A simple app Conversational AI app
+
+You can run a simple conversation AI app included in this repo, follow steps below.
+
+1. Create a new Python venv and install the dependencies for the application.
+
+    ```{.bashrc}
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv venv && source .venv/bin/activate && uv pip sync pyproject.toml
+    ```
+
+1. Start the `vllm` model server.
+
+    ```{.bashrc}
+    # set your HF token
+    export HF_TOKEN=your_hf_token
+    # change the model id and tensor parallel degree as appropriate
+    MODEL_ID=deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B
+    TP_DEGREE=1
+    ./deploy_model.sh $MODEL_ID $TP_DEGREE
+    ```
+
+1. Start the [`Chainlit`](https://docs.chainlit.io/get-started/overview) app.
+
+    ```{.bashrc}
+    chainlit run app.py --port 8001
+    ```
+
+1. At this time your browser should open (or you can click on the [http://localhost:8001](http://localhost:8001)) to open it and you should be able to see a browser window with the Chainlit app.
+
+    ![Assistant](img/assistant.gif)
+
+1. Enjoy! Add a GitHub star to this repo if you found it useful 🙏.
 
