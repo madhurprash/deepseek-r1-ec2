@@ -21,7 +21,11 @@ Here are the steps to serve the [`deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`](htt
     git clone https://github.com/aarora79/deepseek-r1-ec2
     ```
 
-1. Place your Hugging Face token in file called `/tmp/hf_token.txt` on your EC2 instance.
+1. Add your Hugging Face token as an environment variable.
+    
+    ```{.bashrc}
+    export HF_TOKEN=your_hf_token
+    ```
 
 1. SSH to your instance and run the following commands. Running the `deploy_model.sh` does the following:
 
