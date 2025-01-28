@@ -70,7 +70,7 @@ Here are the steps to serve the [`deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`](htt
         "id": "cmpl-2be25863e97347f7b6d1999a50409add",
         "object": "text_completion",
         "created": 1738033499,
-        "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-14B",
+        "model": "deepseek-ai/DeepSeek-R1-Distill-Qwen-32B",
         "choices": [
             {
             "index": 0,
