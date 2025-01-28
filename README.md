@@ -1,8 +1,10 @@
 # `Deepseek-r1` on Amazon EC2
 
+![Assistant](img/assistant.gif)
+
 Here are the steps to serve the [`deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B) and other models from the `deepseek-r1` family of models on Amazon EC2 using [`vllm`](https://github.com/vllm-project/vllm). vLLM is a fast and easy-to-use library for LLM inference and serving.
 
->The steps provided below are for the 32B distilled version but apply to other variants as well. To use `deepseek-ai/DeepSeek-R1-Distill-Qwen-32B` for example run this code on a `g6e.xlarge` Amazon EC2 instance.
+>The steps provided below are for the 32B distilled version but apply to other variants as well. To use `deepseek-ai/DeepSeek-R1-Distill-Qwen-32B` for example run this code on a `g6e.12xlarge` Amazon EC2 instance.
 
 1. Create an EC2 instance with the `Deep Learning OSS Nvidia Driver AMI GPU PyTorch` AMI and `g6e.12xlarge` instance type. You can see step by step instructions [here](https://aws-samples.github.io/foundation-model-benchmarking-tool/misc/ec2_instance_creation_steps.html). At the time of this writing the AMI used for `us-east-1` was `ami-067bd563cecc90173`.
 
@@ -157,8 +159,6 @@ You can run a simple conversation AI app included in this repo, follow steps bel
     ```
 
 1. At this time your browser should open (or you can click on the [http://localhost:8001](http://localhost:8001)) to open it and you should be able to see a browser window with the Chainlit app.
-
-    ![Assistant](img/assistant.gif)
 
 1. Enjoy! Add a GitHub star to this repo if you found it useful 🙏.
 
