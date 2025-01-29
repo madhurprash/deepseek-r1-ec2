@@ -1,3 +1,7 @@
+# The tensor parallel size is the number of GPUs you want to use in each node, and the pipeline parallel size is the 
+# number of nodes you want to use. For example, if you have 16 GPUs in 2 nodes (8 GPUs per node), you can set the tensor parallel 
+# size to 8 and the pipeline parallel size to 2.
+
 # Exit if any command fails
 set -e
 
